@@ -46,9 +46,24 @@
       <a class="nav-item" href="#contato">Contato</a>
     </nav>
     <div class="phone"> (84) 9 9933-1686</div>
+    <button class="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </header>
 
-<main id="home" class="hero">
+  <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+    <nav class="mobile-nav">
+      <a class="mobile-nav-item" href="#top">Início</a>
+      <a class="mobile-nav-item" href="#conquistas">Conquistas</a>
+      <a class="mobile-nav-item" href="#noticias">Notícias</a>
+      <a class="mobile-nav-item" href="#contato">Contato</a>
+    </nav>
+    <div class="mobile-phone">Telefone: (84) 9 9933-1686</div>
+  </div>
+
+  <main id="home" class="hero">
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="portrait"></div>
@@ -60,12 +75,7 @@
   </div>
 </main>
 
-  <nav class="mobile-bottom">
-    <a class="mb-item active" href="#top">Início</a>
-    <a class="mb-item" href="#conquistas">Conquistas</a>
-    <a class="mb-item" href="#noticias">Noticias</a>
-    <a class="mb-item" href="#contato">Contato</a>
-  </nav>
+  <!-- mobile-bottom links moved to mobile hamburger menu -->
 
   <section id="conquistas-e-noticias" class="section py-5" style="background: linear-gradient(180deg,rgba(7,7,7,0.4),rgba(0,0,0,0.6)), hsl(0, 69%, 14%);">
   <div class="container-fluid px-md-5"> <div class="row">
@@ -263,5 +273,28 @@
       window.addEventListener('scroll', onScroll, {passive:true});
     })();
   </script>
+    <script>
+      // Toggle do menu hamburguer mobile
+      (function(){
+        const btn = document.querySelector('.hamburger');
+        const menu = document.getElementById('mobileMenu');
+        if(!btn || !menu) return;
+
+        function toggle(){
+          const open = btn.classList.toggle('open');
+          btn.setAttribute('aria-expanded', open);
+          menu.setAttribute('aria-hidden', String(!open));
+        }
+
+        btn.addEventListener('click', toggle);
+
+        // fechar ao clicar fora
+        document.addEventListener('click', (e)=>{
+          if(!open && !btn.classList.contains('open')) return;
+          if(btn.contains(e.target) || menu.contains(e.target)) return;
+          if(btn.classList.contains('open')) toggle();
+        });
+      })();
+    </script>
 </body>
 </html>

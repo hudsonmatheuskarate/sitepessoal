@@ -1,0 +1,456 @@
+/* Basic reset */
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+html,body{height:100%}
+
+body{font-family:Arial,Helvetica,sans-serif;color:#fff;background:#111}
+
+html{scroll-behavior:smooth}
+
+
+
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 36px;background:rgb(0, 0, 0);border-bottom:1px solid #222;height:64px;position:fixed;top:0;left:0;right:0;z-index:40;}
+
+body{padding-top:64px}
+
+.logo{display:flex;align-items:center}
+
+.logo-icon{display:inline-block;margin-right:0px}
+
+.logo-icon img{height:120px;width:auto;display:block}
+
+.main-nav{display:flex;gap:18px}
+
+.main-nav .nav-item{color:#aaa}
+
+.main-nav .nav-item.active{color:#fff;border-bottom:3px solid #b90f0f;padding-bottom:6px}
+
+.phone{color:#e6e6e6}
+
+.hero-name-img {
+  display: block;
+  max-width: 600px; /* Ajuste o tamanho conforme sua necessidade */
+  height: auto;
+  
+  /* Força o alinhamento à esquerda */
+  margin-left: 0 !important; 
+  margin-right: auto !important;
+
+  /* Se ela ainda estiver longe da borda, use este truque: */
+  position: relative;
+  left: -70px; /* Valores negativos empurram a imagem para fora da margem esquerda */
+  
+  /* Garante que ela não fique colada nos itens de baixo */
+  margin-bottom: 20px; 
+
+  display: block;
+  max-width: 600px;
+  width: 100%; /* Permite que ela diminua se a tela for menor que 600px */
+  height: auto;
+  margin-left: 0;
+  position: relative;
+  left: -70px; /* Ajuste que você já estava usando */
+  z-index: 3;
+  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5)); /* Sombra leve no PNG */
+}
+
+
+/* Garante que o container não neutralize o alinhamento */
+.hero-content {
+  align-items: flex-start !important;
+  text-align: left !important;
+}
+
+.hero{position:relative;min-height:calc(100vh - 72px);display:flex;align-items:center;justify-content:flex-start;padding-left:80px;background-image:url('img/Início.png');background-size:cover;background-position:center}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  /* Cria uma sombra preta da esquerda para a direita */
+  background: linear-gradient(to right, 
+    rgba(0, 0, 0, 0.8) 0%,    /* Cor forte na esquerda */
+    rgba(0, 0, 0, 0.4) 50%,   /* Suaviza no meio */
+    transparent 100%          /* Fica totalmente invisível na direita */
+  );
+  z-index: 1; /* Garante que fique atrás do conteúdo, mas sobre a imagem de fundo */
+}
+
+.hero-content{position:relative;z-index:2;text-align:left;max-width:720px;padding:40px 20px 40px 0}
+
+/*.portrait{width:160px;height:160px;border-radius:6px;background:linear-gradient(180deg,#666,#333);margin:0 auto 14px;background-image:url('img/Início.png');background-size:cover;background-position:center;filter:brightness(0.85)}*/
+
+.hero-name{font-size:52px;letter-spacing:1px;text-shadow:0 3px 0 rgba(0,0,0,0.6);margin-bottom:12px}
+
+.ribbon{display:inline-block;background:#c72a2a;padding:12px 22px;border-radius:6px;font-weight:800;margin-bottom:12px;box-shadow:0 8px 0 rgba(0,0,0,0.45);text-transform:none}
+
+.ribbon a{color:inherit;text-decoration:none}
+.ribbon a:hover{color:inherit;text-decoration:none}
+
+.quote{font-style:italic;color:#e5e5e5;margin-bottom:20px}
+
+
+.cta-row{display:flex;gap:18px;justify-content:center}
+
+.cta{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,0.6);padding:18px 28px;border-radius:12px;box-shadow:0 8px 0 rgba(0,0,0,0.5);color:#fff;text-decoration:none}
+
+.cta span{font-weight:700}
+
+.cta.active{background:#c72a2a;box-shadow:0 8px 0 rgba(0,0,0,0.5)}
+
+
+/* Mobile bottom nav */
+
+.mobile-bottom{display:none}
+
+/* Hide hamburger and mobile menu by default (desktop). Visible only in mobile media query below. */
+.hamburger{display:none}
+.mobile-menu{display:none}
+
+/* Search bar styles (desktop) */
+.site-search{position:relative;max-width:420px;width:40%;}
+.search-form input[type=search]{width:100%;padding:8px 12px;border-radius:8px;border:1px solid #333;background:#0b0b0b;color:#fff}
+.search-preview{position:absolute;left:0;right:0;top:42px;background:linear-gradient(#0b0b0b,#0d0d0d);border:1px solid #222;border-radius:8px;padding:8px;box-shadow:0 10px 30px rgba(0,0,0,0.6);display:none;z-index:80}
+.search-preview[aria-hidden="false"]{display:block}
+.search-preview .preview-cat{font-weight:700;color:#fff;padding:6px 6px 4px;border-bottom:1px solid rgba(255,255,255,0.03);margin-bottom:6px}
+.search-preview .preview-item{display:block;padding:6px;border-radius:6px;color:#ddd;text-decoration:none}
+.search-preview .preview-item:hover{background:rgba(255,255,255,0.02);color:#fff}
+.search-preview .preview-item .p-title{font-weight:700}
+.search-preview .preview-item .p-meta{font-size:12px;color:#999}
+.preview-empty{color:#999;padding:8px;text-align:center}
+
+
+/* Sections: same height as hero and distinct backgrounds */
+
+.section{min-height:calc(100vh - 72px);display:flex;align-items:center;color:#fff}
+
+.section .section-inner{max-width:1400px;margin:0 auto;padding:0 20px}
+
+.section-title{font-size:32px;margin-bottom:18px;color:#fff}
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+
+.card{background:rgba(255,255,255,0.03);padding:18px;border-radius:10px;display:flex;gap:12px;align-items:center}
+
+.card-icon{font-size:32px}
+
+.card-body h3{margin-bottom:6px}
+
+.news-list{display:flex;flex-direction:column;gap:12px}
+
+.news-item{background:rgba(255,255,255,0.03);padding:16px;border-radius:8px}
+
+
+/* Per-section backgrounds (adjust colors/images as desired) */
+
+#conquistas{background:linear-gradient(180deg,rgba(7,7,7,0.4),rgba(0,0,0,0.6)), hsl(0, 69%, 14%);background-size:cover;background-position:center}
+
+#noticias{background:linear-gradient(180deg,rgba(7,7,7,0.4),rgba(0,0,0,0.6)), hsl(0, 69%, 14%);background-size:cover;background-position:center}
+
+#contato{background-image:url('img/mobilefoto.png');background-size:cover;background-position:center}
+
+/* Sombreado na parte inferior do slide para facilitar leitura */
+.carousel-item::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%; /* Altura da sombra (ajuste se quiser mais alta) */
+    background: linear-gradient(to top, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
+    z-index: 1;
+    pointer-events: none; /* Garante que a sombra não bloqueie cliques */
+}
+
+/* Garante que a legenda fique acima da sombra */
+.carousel-caption {
+    z-index: 2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra extra nas letras */
+}
+
+
+@media (max-width:600px){
+
+  .logo{display:flex;align-items:center}
+
+  .logo-icon{display:inline-block;margin-right:0px}
+
+  .logo-icon img{height:120px;width:auto;display:block}
+
+  .topbar{padding:12px 18px}
+
+  .main-nav{display:none}
+
+  .hero {
+      min-height: 100vh;
+      background-image: url('img/mobilefoto.png');
+      background-repeat: no-repeat;
+      background-color: #111; 
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 0;
+    }
+
+
+
+  .portrait{width:120px;height:120px}
+
+  .hero-name{font-size:34px}
+
+  .ribbon{padding:10px 16px}
+
+  .cta-row{margin-top:18px;gap:12px}
+
+  .cta{padding:12px 14px;border-radius:10px}
+
+  .hero-content{text-align:center;max-width:100%;padding:24px}
+
+  .section{min-height:100vh}
+
+  .cards{grid-template-columns:1fr;gap:10px}
+
+  .section .section-inner{padding:0}
+
+  .cta span{display:block}
+
+  .cta{flex-direction:column}
+
+  .mobile-bottom{display:flex;position:fixed;bottom:0;left:0;right:0;height:72px;background:linear-gradient(#0a0a0a,#0d0d0d);justify-content:space-around;align-items:center;border-top:1px solid #222;padding-bottom:6px}
+
+  .mb-item{color:#bbb;font-size:14px}
+
+  .mb-item.active{color:#fff}
+
+  .hero-name-img {
+    max-width: 280px; /* Tamanho menor para celular */
+    
+    left: 0 !important; /* Remove o deslocamento de -70px do desktop */
+    margin-top: 200px;
+    
+    /* Cria o sombreamento na base da imagem */
+    filter: drop-shadow(0 15px 10px rgba(0,0,0,0.8)); 
+    
+    /* Efeito de flutuar levemente acima da sombra */
+    transform: translateY(-10px); 
+  }
+
+
+
+  /* Ajuste no container mobile para garantir centralização */
+  .hero-content {
+    text-align: center !important;
+    align-items: center !important;
+    padding: 20px !important;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Styles for hamburger menu */
+  .hamburger{display:flex;flex-direction:column;gap:6px;width:36px;height:30px;background:transparent;border:0;cursor:pointer;margin-left:12px}
+  .hamburger span{display:block;height:3px;background:#fff;border-radius:3px;transition:all .25s}
+
+  .mobile-menu{position:fixed;top:64px;right:12px;width:260px;background:linear-gradient(180deg,#0b0b0b,#0d0d0d);border:1px solid #222;border-radius:10px;padding:12px;box-shadow:0 10px 30px rgba(0,0,0,0.6);transform:translateY(-10px) scale(.98);opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:60}
+  .mobile-menu[aria-hidden="false"]{transform:translateY(0) scale(1);opacity:1;pointer-events:auto}
+
+  .mobile-nav{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+  .mobile-nav-item{color:#fff;text-decoration:none;padding:10px;border-radius:8px}
+  .mobile-nav-item:hover{background:rgba(255,255,255,0.03)}
+
+  .mobile-phone{color:#ddd;padding:10px;border-top:1px solid #222;margin-top:8px;font-size:14px}
+
+  .hamburger.open span:nth-child(1){transform:translateY(9px) rotate(45deg)}
+  .hamburger.open span:nth-child(2){opacity:0}
+  .hamburger.open span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+}
+
+/* New mobile drawer menu (replaces older mobile-menu) */
+/* Hidden by default on desktop */
+#mobileToggle{display:none}
+#mobileOverlay{display:none}
+#mobileDrawer{display:none}
+
+@media (max-width:600px){
+  /* hide old hamburger to avoid duplicates */
+  .hamburger{display:none !important}
+
+  /* new toggle button */
+  #mobileToggle{display:flex;align-items:center;justify-content:center;width:42px;height:36px;border:0;background:transparent;color:#fff;cursor:pointer;margin-left:10px}
+  #mobileToggle .bar{width:22px;height:2px;background:#fff;display:block;position:relative}
+  #mobileToggle .bar::before,#mobileToggle .bar::after{content:'';position:absolute;left:0;width:22px;height:2px;background:#fff;transition:transform .18s}
+  #mobileToggle .bar::before{top:-7px}
+  #mobileToggle .bar::after{top:7px}
+  #mobileToggle.open .bar{background:transparent}
+  #mobileToggle.open .bar::before{transform:translateY(7px) rotate(45deg)}
+  #mobileToggle.open .bar::after{transform:translateY(-7px) rotate(-45deg)}
+
+  /* full-screen overlay and drawer */
+  #mobileOverlay{display:block;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:75;opacity:0;pointer-events:none;transition:opacity .18s}
+  #mobileOverlay.open{opacity:1;pointer-events:auto}
+
+  #mobileDrawer{display:block;position:fixed;top:0;right:0;height:100%;width:280px;background:linear-gradient(180deg,#0b0b0b,#0d0d0d);z-index:80;transform:translateX(100%);transition:transform .18s;border-left:1px solid #222;padding:18px;overflow:auto}
+  #mobileDrawer.open{transform:translateX(0)}
+
+  .mobile-drawer-nav{display:flex;flex-direction:column;gap:8px}
+  .mobile-drawer-item{color:#fff;text-decoration:none;padding:12px;border-radius:8px}
+  .mobile-drawer-item:hover{background:rgba(255,255,255,0.03)}
+}
+
+/* News carousel indicator styling */
+#newsCarousel .carousel-indicators li { background-color: #b90f0f; }
+#newsCarousel .carousel-indicators .active { background-color: #ff4c4c; }
+#newsCarousel .carousel-control-prev-icon, #newsCarousel .carousel-control-next-icon { filter: invert(1) brightness(0.9); }
+
+
+
+/* small refinements to better match design */
+
+.cta{min-width:140px}
+
+.cta svg{display:none}
+
+
+/* --- Footer Styles --- */
+
+.main-footer {
+
+    background-color: #0b0b0b; /* Preto profundo */
+
+    color: #ffffff;
+
+    padding: 60px 0 20px;
+
+    border-top: 2px solid #1a1a1a;
+
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+
+.footer-column {
+
+    margin-bottom: 30px;
+
+}
+
+
+.footer-title {
+
+    font-size: 1.2rem;
+
+    font-weight: 600;
+
+    margin-bottom: 20px;
+
+    position: relative;
+
+    color: #fff;
+
+}
+
+
+.footer-title::after {
+
+    content: '';
+
+    display: block;
+
+    width: 40px;
+
+    height: 2px;
+
+    background: #0d6efd; /* Azul destaque */
+
+    margin-top: 8px;
+
+}
+
+
+.footer-links {
+
+    list-style: none;
+
+    padding: 0;
+
+}
+
+
+.footer-links li {
+
+    margin-bottom: 10px;
+
+}
+
+
+.footer-links a {
+
+    color: #999;
+
+    text-decoration: none;
+
+    transition: color 0.3s;
+
+}
+
+
+.footer-links a:hover {
+
+    color: #0d6efd;
+
+}
+
+
+/* Ícones Sociais */
+
+.social-icons {
+
+    display: flex;
+
+    gap: 15px;
+
+}
+
+
+.social-link {
+
+    width: 40px;
+
+    height: 40px;
+
+    background-color: #1a1a1a;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    transition: all 0.3s ease;
+
+}
+
+
+.social-link:hover {
+
+    background-color: #0d6efd;
+
+    transform: translateY(-5px);
+
+    color: #fff;
+
+}
+
+
+.footer-divider {
+
+    border-color: #222;
+
+/* Share buttons globals (used by noticia_detail) */
+.btn-share { font-weight:700 }

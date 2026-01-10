@@ -1,0 +1,112 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resultados da busca</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <style>
+    .no-results{ text-align:center; padding:80px 20px; color:#ccc }
+    .result-group{ max-width:1000px; margin: 0 auto 30px }
+    .result-item img{ max-height:120px; object-fit:cover }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo"><a href="/" class="logo-icon"><img src="{% static 'img/logo.png' %}" alt="Logo"></a></div>
+    <nav class="main-nav">
+      <a class="nav-item" href="/">Início</a>
+      <a class="nav-item" href="{% url 'conquistas' %}">Conquistas</a>
+      <a class="nav-item" href="#noticias">Notícias</a>
+      <a class="nav-item" href="#contato">Contato</a>
+    </nav>
+    <div class="site-search">
+      <form action="{% url 'search_results' %}" method="get" class="search-form">
+        <input id="siteSearchInput" name="q" type="search" value="{{ q }}" placeholder="Pesquisar notícias e conquistas..." autocomplete="off">
+      </form>
+      <div id="searchPreview" class="search-preview" aria-hidden="true"></div>
+    </div>
+    <button class="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+  </header>
+
+  <main class="section py-5">
+    <div class="container">
+      <h2>Resultados para "{{ q }}"</h2>
+
+      {% if noticias or conquistas %}
+        {% if noticias %}
+          <div class="result-group">
+            <h4>Notícias</h4>
+            <div class="list-group">
+              {% for n in noticias %}
+                <a href="{% url 'noticia_detail' n.slug %}" class="list-group-item list-group-item-action bg-dark text-white result-item">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ n.title }}</h5>
+                    <small>{{ n.created_at|date:"d/m/Y" }}</small>
+                  </div>
+                  <p class="mb-1 text-muted">{{ n.text|truncatechars:180 }}</p>
+                </a>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if conquistas %}
+          <div class="result-group">
+            <h4>Conquistas</h4>
+            <div class="list-group">
+              {% for c in conquistas %}
+                <a href="{% url 'conquista_detail' c.slug %}" class="list-group-item list-group-item-action bg-dark text-white result-item">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ c.title }}</h5>
+                    <small>{{ c.created_at|date:"d/m/Y" }}</small>
+                  </div>
+                  <p class="mb-1 text-muted">{{ c.text|truncatechars:180 }}</p>
+                </a>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+      {% else %}
+        <div class="no-results">
+          <h3>Nenhum resultado encontrado</h3>
+          <p>Tente termos diferentes ou remova acentos.</p>
+        </div>
+      {% endif %}
+    </div>
+  </main>
+
+  <footer class="main-footer">
+    <div class="container"><div class="footer-bottom text-center"><p>&copy; 2026 Hudson Matheus. Todos os direitos reservados.</p></div></div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script>
+    // attach same live preview script for search box on results page
+    (function(){
+      const input = document.getElementById('siteSearchInput');
+      const preview = document.getElementById('searchPreview');
+      if(!input) return;
+      let controller=null;
+      input.addEventListener('input', function(){
+        const q=this.value.trim();
+        if(controller){controller.abort();controller=null}
+        if(!q){ preview.innerHTML=''; preview.setAttribute('aria-hidden','true'); return; }
+        controller=new AbortController();
+        fetch(`/search_ajax/?q=${encodeURIComponent(q)}`, {signal:controller.signal}).then(r=>r.json()).then(data=>{
+          // reuse simple rendering from index
+          preview.innerHTML=''; const wrap=document.createElement('div'); wrap.className='search-preview-wrap';
+          if(data.noticias.length){ const h=document.createElement('div'); h.className='preview-cat'; h.textContent='Notícias'; wrap.appendChild(h);
+            data.noticias.forEach(n=>{ const a=document.createElement('a'); a.href='/noticias/'+n.slug+'/'; a.className='preview-item'; a.innerHTML=`<div class="p-title">${n.title}</div><div class="p-meta">${n.created_at}</div>`; wrap.appendChild(a); }); }
+          if(data.conquistas.length){ const h2=document.createElement('div'); h2.className='preview-cat'; h2.textContent='Conquistas'; wrap.appendChild(h2);
+            data.conquistas.forEach(c=>{ const a=document.createElement('a'); a.href='/conquistas/'+c.slug+'/'; a.className='preview-item'; a.innerHTML=`<div class="p-title">${c.title}</div><div class="p-meta">${c.created_at}</div>`; wrap.appendChild(a); }); }
+          preview.appendChild(wrap); preview.setAttribute('aria-hidden','false');
+        }).catch(()=>{});
+      });
+    })();
+  </script>
+</body>
+</html>

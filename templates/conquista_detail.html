@@ -1,0 +1,121 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ conquista.title }} — Conquista</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <style>
+    .conquista-text { text-align: justify; text-justify: inter-word; }
+    .conquista-meta { color: #bbb; font-size: .9rem; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <a href="/" class="logo-icon"><img src="{% static 'img/logo.png' %}" alt="Logo"></a>
+    </div>
+    <nav class="main-nav">
+      <a class="nav-item" href="/">Início</a>
+  <script>
+    // Live search preview
+    (function(){
+      const input = document.getElementById('siteSearchInput');
+      const preview = document.getElementById('searchPreview');
+      let controller = null;
+      function clearPreview(){ preview.innerHTML=''; preview.setAttribute('aria-hidden','true'); }
+      function render(data){
+        preview.innerHTML = '';
+        const wrap = document.createElement('div'); wrap.className = 'search-preview-wrap';
+        const noticias = data.noticias || [];
+        const conquistas = data.conquistas || [];
+        if(noticias.length){ const h = document.createElement('div'); h.className='preview-cat'; h.textContent='Notícias'; wrap.appendChild(h);
+          noticias.forEach(n=>{ const a=document.createElement('a'); a.href='/noticias/'+n.slug+'/'; a.className='preview-item'; a.innerHTML=`<div class="p-title">${n.title}</div><div class="p-meta">${n.created_at}</div>`; wrap.appendChild(a); }); }
+        if(conquistas.length){ const h2 = document.createElement('div'); h2.className='preview-cat'; h2.textContent='Conquistas'; wrap.appendChild(h2);
+          conquistas.forEach(c=>{ const a=document.createElement('a'); a.href='/conquistas/'+c.slug+'/'; a.className='preview-item'; a.innerHTML=`<div class="p-title">${c.title}</div><div class="p-meta">${c.created_at}</div>`; wrap.appendChild(a); }); }
+        if(!noticias.length && !conquistas.length){ const e = document.createElement('div'); e.className='preview-empty'; e.textContent='Nenhum resultado rápido encontrado'; wrap.appendChild(e); }
+        preview.appendChild(wrap); preview.setAttribute('aria-hidden','false');
+      }
+      if(!input) return;
+      input.addEventListener('input', function(){
+        const q = this.value.trim(); if(controller){ controller.abort(); controller=null; }
+        if(!q){ clearPreview(); return; }
+        controller = new AbortController();
+        fetch(`/search_ajax/?q=${encodeURIComponent(q)}`, {signal: controller.signal}).then(r=>r.json()).then(data=> render(data)).catch(()=>{});
+      });
+      document.addEventListener('click', function(e){ if(!preview.contains(e.target) && e.target !== input) clearPreview(); });
+    })();
+  </script>
+      <a class="nav-item" href="{% url 'conquistas' %}">Conquistas</a>
+      <a class="nav-item" href="#noticias">Notícias</a>
+      <a class="nav-item" href="#contato">Contato</a>
+    </nav>
+    <div class="site-search">
+      <form action="{% url 'search_results' %}" method="get" class="search-form">
+        <input id="siteSearchInput" name="q" type="search" placeholder="Pesquisar notícias e conquistas..." autocomplete="off">
+      </form>
+      <div id="searchPreview" class="search-preview" aria-hidden="true"></div>
+    </div>
+    <button class="hamburger" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+    <button id="mobileToggle" aria-label="Abrir menu mobile" aria-expanded="false">
+      <span class="bar"></span>
+    </button>
+  </header>
+  <div id="mobileOverlay" aria-hidden="true"></div>
+  <aside id="mobileDrawer" aria-hidden="true">
+    <nav class="mobile-drawer-nav">
+      <a class="mobile-drawer-item" href="/">Início</a>
+      <a class="mobile-drawer-item" href="{% url 'conquistas' %}">Conquistas</a>
+      <a class="mobile-drawer-item" href="#noticias">Notícias</a>
+      <a class="mobile-drawer-item" href="#contato">Contato</a>
+    </nav>
+    <div class="mobile-phone" style="margin-top:12px;color:#ddd">Telefone: (84) 9 9933-1686</div>
+  </aside>
+
+  <main class="section py-5">
+    <div class="container">
+      <article class="conquista-article">
+        <h1 class="mb-3">{{ conquista.title }}</h1>
+        {% if conquista.image %}
+        <img src="{{ conquista.image.url }}" alt="{{ conquista.title }}" class="img-fluid mb-3">
+        {% endif %}
+        <div class="conquista-meta">Publicado em {{ conquista.created_at|date:"d/m/Y H:i" }}</div>
+        <div class="conquista-text">{{ conquista.text|linebreaks }}</div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-bottom text-center">
+        <p>&copy; 2026 Hudson Matheus. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    (function(){
+      const oldBtn = document.querySelector('.hamburger');
+      const btn = document.getElementById('mobileToggle');
+      const overlay = document.getElementById('mobileOverlay');
+      const drawer = document.getElementById('mobileDrawer');
+      if(!btn || !overlay || !drawer) return;
+      function open(){ btn.classList.add('open'); btn.setAttribute('aria-expanded','true'); overlay.classList.add('open'); overlay.setAttribute('aria-hidden','false'); drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); }
+      function close(){ btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); overlay.classList.remove('open'); overlay.setAttribute('aria-hidden','true'); drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); }
+      function toggle(){ if(drawer.classList.contains('open')) close(); else open(); }
+      btn.addEventListener('click', function(e){ e.stopPropagation(); toggle(); });
+      overlay.addEventListener('click', close);
+      document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
+      drawer.addEventListener('click', function(e){ e.stopPropagation(); });
+      if(oldBtn){ oldBtn.addEventListener('click', function(e){ e.preventDefault(); toggle(); }); }
+    })();
+  </script>
+</body>
+</html>
