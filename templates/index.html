@@ -137,88 +137,37 @@
           <div style="width: 50px; height: 3px; background-color: #b90f0f;"></div>
         </div>
 
-        <div id="newsCarousel" class="carousel slide shadow-sm" data-ride="carousel">
-          <ol class="carousel-indicators">
-            {% if noticias %}
-              {% for n in noticias %}
-                <li data-target="#newsCarousel" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
-              {% endfor %}
-            {% else %}
-              <li data-target="#newsCarousel" data-slide-to="0" class="active"></li>
-            {% endif %}
-          </ol>
-          <div class="carousel-inner">
+        <div class="news-list shadow-sm">
+          {% if noticias %}
             {% for n in noticias %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}">
-              <div class="card bg-dark border-secondary mb-3">
-                <div class="row no-gutters">
+              <div class="news-item bg-dark border-secondary mb-3 p-2">
+                <div class="row no-gutters align-items-center">
                   <div class="col-4">
                     {% if n.image %}
-                    <a href="{% url 'noticia_detail' n.slug %}"><img src="{{ n.image.url }}" class="card-img h-100" style="object-fit: cover;" alt="{{ n.title }}"></a>
+                      <a href="{% url 'noticia_detail' n.slug %}"><img src="{{ n.image.url }}" class="card-img h-100" style="object-fit: cover;" alt="{{ n.title }}"></a>
                     {% else %}
-                    <img src="{% static 'img/foto2.png' %}" class="card-img h-100" style="object-fit: cover;" alt="{{ n.title }}">
+                      <img src="{% static 'img/foto2.png' %}" class="card-img h-100" style="object-fit: cover;" alt="{{ n.title }}">
                     {% endif %}
                   </div>
                   <div class="col-8">
-                    <div class="card-body p-2">
-                      <h6 class="card-title mb-1"><a href="{% url 'noticia_detail' n.slug %}" style="color:inherit;text-decoration:none">{{ n.title }}</a></h6>
-                      <p class="card-text small text-muted">{{ n.created_at|date:"d/m/Y" }}</p>
+                    <div class="p-2">
+                      <h6 class="mb-1"><a href="{% url 'noticia_detail' n.slug %}" style="color:inherit;text-decoration:none">{{ n.title }}</a></h6>
+                      <p class="small text-muted mb-0">{{ n.created_at|date:"d/m/Y" }}</p>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            {% empty %}
-            <div class="carousel-item active">
-              <div class="card bg-dark border-secondary mb-3">
-                <div class="row no-gutters">
-                  <div class="col-4"><img src="{% static 'img/foto2.png' %}" class="card-img h-100" style="object-fit: cover;" alt="..."></div>
-                  <div class="col-8"><div class="card-body p-2"><h6 class="card-title mb-1">Nenhuma notícia</h6><p class="card-text small text-muted">Sem notícias publicadas.</p></div></div>
-                </div>
-              </div>
-            </div>
             {% endfor %}
-          </div>
-          <a class="carousel-control-prev" href="#newsCarousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Anterior</span>
-          </a>
-          <a class="carousel-control-next" href="#newsCarousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Próximo</span>
-          </a>
+          {% else %}
+            <div class="news-item"><p>Nenhuma notícia publicada.</p></div>
+          {% endif %}
         </div>
       </div>
     </div>
   </div>
 </section>
 
-  <section id="noticias" class="section noticias py-5">
-    <div class="container">
-      <div class="row mb-4">
-        <div class="col-12 text-center">
-          <h3 class="font-weight-bold mb-1">Patrocinadores</h3>
-        </div>
-      <div class="card-deck">
-        <div class="card">
-          <img class="card-img-top" src="{% static 'img/foto2.png' %}" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Título da Notícia</h5>
-            <p class="card-text">Descrição breve da conquista ou novidade do atleta.</p>
-            <p class="card-text"><small class="text-muted">Atualizado 3 min atrás</small></p>
-          </div>
-        </div>
-        <div class="card">
-          <img class="card-img-top" src="{% static 'img/foto2.png' %}" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Título da Notícia</h5>
-            <p class="card-text">Descrição breve da conquista ou novidade do atleta.</p>
-            <p class="card-text"><small class="text-muted">Atualizado 3 min atrás</small></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- Seção de patrocinadores removida conforme solicitado -->
 
   <section id="contato" class="section contato">
     <div class="section-inner text-center">
@@ -399,5 +348,6 @@
       if(oldBtn){ oldBtn.addEventListener('click', function(e){ e.preventDefault(); toggle(); }); }
     })();
   </script>
+  <!-- Sponsors carousel removed -->
 </body>
 </html>

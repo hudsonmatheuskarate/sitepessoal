@@ -124,6 +124,8 @@ body{padding-top:64px}
 
 .section{min-height:calc(100vh - 72px);display:flex;align-items:center;color:#fff}
 
+/* Sponsors removed - styles deleted as section was removed from templates */
+
 .section .section-inner{max-width:1400px;margin:0 auto;padding:0 20px}
 
 .section-title{font-size:32px;margin-bottom:18px;color:#fff}
@@ -454,3 +456,4 @@ body{padding-top:64px}
 
 /* Share buttons globals (used by noticia_detail) */
 .btn-share { font-weight:700 }
+}

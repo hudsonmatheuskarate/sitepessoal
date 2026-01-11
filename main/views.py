@@ -4,7 +4,7 @@ from .models import Conquista, Noticia, Bibliografia
 
 def index(request):
     conquistas = Conquista.objects.all()
-    noticias = Noticia.objects.all()
+    noticias = Noticia.objects.order_by('-created_at')[:3]
     bibliografia = Bibliografia.objects.order_by('-created_at').first()
     return render(request, 'index.html', {'conquistas': conquistas, 'noticias': noticias, 'bibliografia': bibliografia})
 

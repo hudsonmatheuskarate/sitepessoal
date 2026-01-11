@@ -34,3 +34,5 @@ class BibliografiaAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     readonly_fields = ('created_at',)
     inlines = (BibliografiaBlockInline,)
+
+# Sponsor admin removed when Sponsor model was deleted

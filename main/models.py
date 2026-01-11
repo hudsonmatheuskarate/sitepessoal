@@ -134,3 +134,7 @@ class BibliografiaBlock(models.Model):
             vid = m.group(1)
             return f'https://www.youtube.com/embed/{vid}'
         return url
+
+
+
+
