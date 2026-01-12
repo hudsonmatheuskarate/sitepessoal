@@ -62,6 +62,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'karater_db',
+        'USER': 'admin',
+        'PASSWORD': 'm4OoQI2MtAuan5ft4pGqUjgLiXJMHXeC',
+        'HOST': 'dpg-d5if2p14tr6s73a5d2fg-a/karater_db',
+        'PORT': '5432',
     }
 }
