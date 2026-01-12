@@ -59,8 +59,9 @@ WSGI_APPLICATION = 'hudsonsite.wsgi.application'
 # --- BANCO DE DADOS (Configuração para PostgreSQL do Render) ---
 DATABASES = {
     'default': dj_database_url.config(
-        # Sua URL do banco (O Render preenche isso sozinho se houver a variável DATABASE_URL)
-        default='postgresql://admin:m4OoQI2MtAuan5ft4pGqUjgLiXJMHXeC@dpg-d5if2p14tr6s73a5d2fg-a/karater_db',
+        # O Django vai priorizar a variável DATABASE_URL que você configurou no painel do Render
+        # Se ele não achar (ex: no seu PC), ele usa o SQLite para não dar erro
+        default=os.environ.get('DATABASE_URL', 'sqlite:///db.sqlite3'),
         conn_max_age=600
     )
 }
